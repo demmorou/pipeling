@@ -1,0 +1,6 @@
+{
+  "src/**/*.ts": [
+    "yarn eslint --ext ts --fix",
+    "yarn test --bail --findRelatedTests"
+  ]
+}
