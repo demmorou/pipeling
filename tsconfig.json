@@ -3,7 +3,7 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
-    "lib": ["es6"],
+    "lib": ["es2017"],
     "allowJs": true,
     "removeComments": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"],
@@ -25,7 +25,8 @@
     "baseUrl": "./src",
     "paths": {
       "~config/*": ["config/*"],
-      "~modules/*": ["modules/*"]
+      "~modules/*": ["modules/*"],
+      "~shared/*": ["shared/*"]
     }
   },
   "include": ["src"]

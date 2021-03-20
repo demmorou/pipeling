@@ -19,7 +19,8 @@
       {
         "alias": {
           "@config": "./src/config",
-          "@modules": "./src/modules"
+          "@modules": "./src/modules",
+          "@shared": "./src/shared"
         }
       }
     ]
