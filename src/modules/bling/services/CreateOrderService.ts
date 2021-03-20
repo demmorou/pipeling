@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { AxiosResponse } from 'axios';
 import FormData from 'form-data';
 import json2xml from 'json2xml';
 import { inject, injectable } from 'tsyringe';
@@ -6,6 +7,7 @@ import { inject, injectable } from 'tsyringe';
 import { IHttpProvider } from '~shared/container/providers/HttpProvider/models/IHttpProvider';
 
 import { blingConfig } from '~config/bling';
+import { IDealData } from '~modules/pipedrive/dtos/IGetDealsResponseDTO';
 
 @injectable()
 export class CreateOrderService {
@@ -21,35 +23,39 @@ export class CreateOrderService {
     });
   }
 
-  public async execute(): Promise<void> {
-    const formData = new FormData();
+  public async execute(deals: IDealData[]): Promise<void> {
+    const promises: Promise<AxiosResponse>[] = [];
 
-    const pedido = {
-      cliente: {
-        nome: 'Deusimar',
-      },
-      itens: {
-        item: {
-          codigo: '007',
-          descricao: '[Sample] Brighton Circle',
-          qtde: '1',
-          vlr_unit: '300',
+    deals.forEach(async deal => {
+      const formData = new FormData();
+
+      const pedido = {
+        cliente: {
+          nome: deal.person_id.name,
         },
-      },
-    };
+        itens: {
+          item: {
+            codigo: deal.id,
+            descricao: deal.title,
+            qtde: '1',
+            vlr_unit: deal.value,
+          },
+        },
+      };
 
-    const xml = json2xml({ pedido });
+      const xml = json2xml({ pedido });
 
-    formData.append('xml', xml);
+      formData.append('xml', xml);
 
-    try {
-      const response = await this.httpProvider.post('/pedido/json/', formData, {
-        headers: formData.getHeaders(),
-      });
+      promises.push(
+        this.httpProvider.post('/pedido/json/', formData, {
+          headers: formData.getHeaders(),
+        }),
+      );
+    });
 
-      console.log(response.data.retorno.pedidos);
-    } catch (error) {
-      console.log(error.response.data.retorno.erros.erro);
-    }
+    Promise.all(promises).then(response => {
+      console.log(response);
+    });
   }
 }

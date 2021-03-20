@@ -28,8 +28,8 @@ export class SearchDealsService {
   public async execute({
     status,
     start,
-  }: IRequest): Promise<IGetDealsResponseDTO[]> {
-    const response = await this.httpProvider.get<IGetDealsResponseDTO[]>(
+  }: IRequest): Promise<IGetDealsResponseDTO> {
+    const response = await this.httpProvider.get<IGetDealsResponseDTO>(
       `/deals/`,
       {
         params: {

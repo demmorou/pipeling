@@ -11,14 +11,12 @@ class GetDealsAndCreateOrders {
   }
 
   private async job(): Promise<ScheduledTask> {
-    return schedule('35 34 11 * * *', async () => {
+    return schedule('50 12 * * *', async () => {
       const getDeals = container.resolve(SearchDealsService);
       const deals = await getDeals.execute({ start: 0, status: 'won' });
 
-      console.log(deals);
-
       const createOrder = container.resolve(CreateOrderService);
-      await createOrder.execute();
+      await createOrder.execute(deals.data);
     });
   }
 }
