@@ -1,3 +1,5 @@
-export interface IHeaders {
+interface IHeaders {
   headers?: Record<string, unknown>;
 }
+
+export { IHeaders };

@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosResponse } from 'axios';
+import { format, parseISO } from 'date-fns';
 import FormData from 'form-data';
 import json2xml from 'json2xml';
 import { inject, injectable } from 'tsyringe';
@@ -9,11 +9,15 @@ import { IHttpProvider } from '~shared/container/providers/HttpProvider/models/I
 import { blingConfig } from '~config/bling';
 import { IDealData } from '~modules/pipedrive/dtos/IGetDealsResponseDTO';
 
+import { IOrdersRepository } from '../repositories/IOrdersRepository';
+
 @injectable()
-export class CreateOrderService {
+class CreateOrderService {
   constructor(
     @inject('HttpProvider')
     private readonly httpProvider: IHttpProvider,
+    @inject('OrdersRepository')
+    private ordersRepository: IOrdersRepository,
   ) {
     httpProvider.setup({
       baseURL: blingConfig.baseURL,
@@ -28,8 +32,10 @@ export class CreateOrderService {
 
     deals.forEach(async deal => {
       const formData = new FormData();
+      const date = format(parseISO(deal.won_time), 'dd-MM-yyyy');
 
       const pedido = {
+        data: date,
         cliente: {
           nome: deal.person_id.name,
         },
@@ -47,6 +53,11 @@ export class CreateOrderService {
 
       formData.append('xml', xml);
 
+      await this.ordersRepository.create({
+        date,
+        value: deal.value,
+      });
+
       promises.push(
         this.httpProvider.post('/pedido/json/', formData, {
           headers: formData.getHeaders(),
@@ -54,8 +65,8 @@ export class CreateOrderService {
       );
     });
 
-    Promise.all(promises).then(response => {
-      console.log(response);
-    });
+    await Promise.all(promises);
   }
 }
+
+export { CreateOrderService };

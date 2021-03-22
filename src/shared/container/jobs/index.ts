@@ -1,1 +1,1 @@
-import '~modules/pipedrive/jobs';
+import '~modules/bling/jobs';

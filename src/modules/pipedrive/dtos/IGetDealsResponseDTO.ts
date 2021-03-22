@@ -1,5 +1,6 @@
-export interface IDealData {
+interface IDealData {
   id: string;
+  won_time: string;
   title: string;
   value: number;
   person_id: {
@@ -7,7 +8,9 @@ export interface IDealData {
   };
 }
 
-export interface IGetDealsResponseDTO {
+interface IGetDealsResponseDTO {
   success: boolean;
   data: IDealData[];
 }
+
+export { IDealData, IGetDealsResponseDTO };

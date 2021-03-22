@@ -2,9 +2,11 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 
-import '~shared/container';
-import '~shared/container/jobs';
 import { router } from './routes';
+
+import '~shared/container/jobs';
+import '~shared/infra/typeorm';
+import '~shared/container';
 
 const PORT = process.env.PORT || 3333;
 

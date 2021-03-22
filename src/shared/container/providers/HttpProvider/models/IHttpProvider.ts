@@ -3,7 +3,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { IHttpSetup } from '../dtos/ISetup';
 
-export interface IHttpProvider {
+interface IHttpProvider {
   setup(data: IHttpSetup): void;
   get<T = any>(
     path: string,
@@ -29,3 +29,5 @@ export interface IHttpProvider {
     config?: AxiosRequestConfig,
   ): Promise<AxiosResponse<T>>;
 }
+
+export { IHttpProvider };

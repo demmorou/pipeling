@@ -5,7 +5,7 @@ import Axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { IHttpSetup } from '../dtos/ISetup';
 import { IHttpProvider } from '../models/IHttpProvider';
 
-export class AxiosProvider implements IHttpProvider {
+class AxiosProvider implements IHttpProvider {
   private axios: AxiosInstance;
 
   public setup({ baseURL, headers, params }: IHttpSetup): void {
@@ -54,3 +54,5 @@ export class AxiosProvider implements IHttpProvider {
     return this.axios.patch(path, data, config);
   }
 }
+
+export { AxiosProvider };

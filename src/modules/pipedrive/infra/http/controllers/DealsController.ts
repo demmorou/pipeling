@@ -8,7 +8,7 @@ interface ISearchQuery {
   start: number;
 }
 
-export class DealsController {
+class DealsController {
   public async index(request: Request, response: Response): Promise<Response> {
     const { status, start } = (request.query as unknown) as ISearchQuery;
 
@@ -19,3 +19,5 @@ export class DealsController {
     return response.json(deals);
   }
 }
+
+export { DealsController };

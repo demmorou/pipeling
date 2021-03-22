@@ -12,7 +12,7 @@ interface IRequest {
 }
 
 @injectable()
-export class SearchDealsService {
+class SearchDealsService {
   constructor(
     @inject('HttpProvider')
     private readonly httpProvider: IHttpProvider,
@@ -42,3 +42,5 @@ export class SearchDealsService {
     return response.data;
   }
 }
+
+export { SearchDealsService };
