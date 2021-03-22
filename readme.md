@@ -6,6 +6,8 @@ Uma rotina configurada manualmente é responsável por executar esse processo ci
 
 Um endpoint `GET /orders` pode ser acessado para listar as transações salvas dentro do MongoDB.
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=pipeling&uri=https://github.com/deusimardamiao/pipeling/blob/master/insomnia.json)
+
 # Techs
   * [Node.js](https://nodejs.org/en/)
   * [Typescript](https://www.typescriptlang.org/)
